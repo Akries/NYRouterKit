@@ -16,6 +16,9 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
 
+  s.dependency 'KVOController'
+  s.dependency 'REFrostedViewController'
+  s.dependency 'MJExtension'
 
 
 end
