@@ -14,6 +14,7 @@
 #import "UIViewController+Router.h"
 #import <KVOController/KVOController.h>
 #import <REFrostedViewController/REFrostedViewController.h>//抽屉
+#import <RTRootNavigationController/RTRootNavigationController.h>
 
 @implementation UIViewController (Dismiss)
 
@@ -101,7 +102,9 @@
         UIViewController *destinationVC = destinationViewController;
         
         if (self.options & NYIntentPresentWrapNC) {
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:destinationVC];
+            //            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:destinationVC];
+            //            navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            RTRootNavigationController *navigationController = [[RTRootNavigationController alloc] initWithRootViewController:destinationVC];
             navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
             
             if (self.options & NYIntentPresentTransitionStyleFlipHorizontal) {
@@ -124,7 +127,7 @@
         }
         
         [sourceViewController presentViewController:destinationVC
-                                           animated:YES
+                                           animated:self.animation
                                          completion:^{
                                              if (completionBlock) {
                                                  completionBlock(nil);
@@ -156,7 +159,7 @@
         
         BOOL shouldResetHideBottomBarWhenPushed = !sourceViewController.hidesBottomBarWhenPushed;
         sourceViewController.hidesBottomBarWhenPushed = true;
-        [navigationController pushViewController:destinationViewController animated:true];
+        [navigationController pushViewController:destinationViewController animated:self.animation];
         
         if (shouldResetHideBottomBarWhenPushed) {
             self.routerSource.hidesBottomBarWhenPushed = false;

@@ -195,7 +195,7 @@
 
 #pragma mark - get / set
 - (NYIntentOptions)router_options {
-    NSString *options = [self objc_getAssociatedObject:@"jy_router_options"];
+    NSString *options = [self objc_getAssociatedObject:@"ny_router_options"];
     if (!options) {
         options = @"0";
     }
@@ -204,16 +204,16 @@
 
 - (void)setRouter_options:(NYIntentOptions)router_options {
     NSString *options = [NSString stringWithFormat:@"%lu",(unsigned long)router_options];
-    [self objc_setAssociatedObject:@"jy_router_options" value:options policy:OBJC_ASSOCIATION_COPY_NONATOMIC];
+    [self objc_setAssociatedObject:@"ny_router_options" value:options policy:OBJC_ASSOCIATION_COPY_NONATOMIC];
 }
 
 - (NSString *)router_key {
-    NSString *key = [self objc_getAssociatedObject:@"jy_router_key"];
+    NSString *key = [self objc_getAssociatedObject:@"ny_router_key"];
     return key;
 }
 
 - (void)setRouter_key:(NSString *)router_key {
-    [self objc_setAssociatedObject:@"jy_router_key" value:router_key policy:OBJC_ASSOCIATION_COPY_NONATOMIC];
+    [self objc_setAssociatedObject:@"ny_router_key" value:router_key policy:OBJC_ASSOCIATION_COPY_NONATOMIC];
 }
 
 @end
