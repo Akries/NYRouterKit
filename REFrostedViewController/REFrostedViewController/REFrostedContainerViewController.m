@@ -63,6 +63,13 @@
         [backgroundView addGestureRecognizer:tapRecognizer];
     }
     
+    UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectNull];
+    backgroundView.alpha = 0.0f;
+    UIView *rightBackgroundView = self.backgroundViews[1];
+    [rightBackgroundView addSubview:backgroundView];
+    [self.backgroundViews addObject:backgroundView];
+    
+    
     self.containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.containerView.clipsToBounds = YES;
     [self.view addSubview:self.containerView];
@@ -71,7 +78,7 @@
         UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:self.view.bounds];
         toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         toolbar.barStyle = (UIBarStyle)self.frostedViewController.liveBlurBackgroundStyle;
-//        [self.containerView addSubview:toolbar];
+        //        [self.containerView addSubview:toolbar];
     } else {
         self.backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
         [self.containerView addSubview:self.backgroundImageView];
@@ -124,8 +131,17 @@
     UIView *bottomBackgroundView = self.backgroundViews[2];
     UIView *rightBackgroundView = self.backgroundViews[3];
     
+    UIView *rightShadowView = self.backgroundViews[4];
+    
     leftBackgroundView.frame = CGRectMake(0, 0, frame.origin.x, self.view.frame.size.height);
     rightBackgroundView.frame = CGRectMake(frame.size.width + frame.origin.x, 0, self.view.frame.size.width - frame.size.width - frame.origin.x, self.view.frame.size.height);
+    
+    rightShadowView.frame = CGRectMake(frame.size.width + frame.origin.x-40, 0,40, self.view.frame.size.height);
+    rightShadowView.backgroundColor = [UIColor whiteColor];
+    rightShadowView.layer.shadowColor = [UIColor colorWithRed:52/255.0 green:73/255.0 blue:94/255.0 alpha:1.0].CGColor;
+    rightShadowView.layer.shadowOpacity = 1.0;
+    rightShadowView.layer.shadowRadius = 15;
+    
     
     topBackgroundView.frame = CGRectMake(frame.origin.x, 0, frame.size.width, frame.origin.y);
     bottomBackgroundView.frame = CGRectMake(frame.origin.x, frame.size.height + frame.origin.y, frame.size.width, self.view.frame.size.height);
@@ -213,7 +229,7 @@
 
 - (void)hide
 {
-	[self hideWithCompletionHandler:nil];
+    [self hideWithCompletionHandler:nil];
 }
 
 - (void)hideWithCompletionHandler:(void(^)(void))completionHandler
@@ -313,7 +329,7 @@
                     frame.size.width = self.frostedViewController.calculatedMenuViewSize.width + self.containerOrigin.x + point.x;
                     if (frame.size.width > self.view.frame.size.width)
                         frame.size.width = self.view.frame.size.width;
-                        return;
+                    return;
                 }
             }
         }
@@ -322,7 +338,7 @@
             frame.origin.x = self.containerOrigin.x + point.x;
             if (frame.origin.x < self.view.frame.size.width - self.frostedViewController.calculatedMenuViewSize.width) {
                 frame.origin.x = self.view.frame.size.width - self.frostedViewController.calculatedMenuViewSize.width;
-            
+                
                 if (!self.frostedViewController.limitMenuViewSize) {
                     frame.origin.x = self.containerOrigin.x + point.x;
                     if (frame.origin.x < 0)
@@ -336,7 +352,7 @@
             frame.origin.y = self.containerOrigin.y + point.y;
             if (frame.origin.y > 0) {
                 frame.origin.y = 0;
-            
+                
                 if (!self.frostedViewController.limitMenuViewSize) {
                     frame.size.height = self.frostedViewController.calculatedMenuViewSize.height + self.containerOrigin.y + point.y;
                     if (frame.size.height > self.view.frame.size.height)
@@ -349,7 +365,7 @@
             frame.origin.y = self.containerOrigin.y + point.y;
             if (frame.origin.y < self.view.frame.size.height - self.frostedViewController.calculatedMenuViewSize.height) {
                 frame.origin.y = self.view.frame.size.height - self.frostedViewController.calculatedMenuViewSize.height;
-            
+                
                 if (!self.frostedViewController.limitMenuViewSize) {
                     frame.origin.y = self.containerOrigin.y + point.y;
                     if (frame.origin.y < 0)
